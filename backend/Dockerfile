@@ -8,7 +8,10 @@ COPY ./download_instructor.py /app/download_instructor.py
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
 RUN git clone https://github.com/PanQiWei/AutoGPTQ
-RUN pip install /app/AutoGPTQ
+#RUN pip install /app/AutoGPTQ
+WORKDIR /app/AutoGPTQ
+RUN python3 setup.py build
+RUN python3 setup.py install
 RUN mkdir models
 RUN python3 /app/download_model.py TheBloke/Manticore-13B-GPTQ
 COPY ./.env /app/.env
